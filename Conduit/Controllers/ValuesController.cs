@@ -3,18 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Web;
+using Web.Models;
 
-namespace Conduit.Controllers
+namespace Conduit.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly ApplicationDbContext _dbContext; 
+        public ValuesController(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<Employee>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _dbContext.Employees.ToList();
         }
 
         // GET api/values/5
