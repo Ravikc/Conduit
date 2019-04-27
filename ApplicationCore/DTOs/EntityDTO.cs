@@ -1,6 +1,6 @@
-﻿namespace ApplicationCore.DTOs
+﻿namespace Conduit.ApplicationCore.DTOs
 {
-    public class EntityDTO<T>
+    public class EntityDto<T>
     {
         public T Id { get; set; }
     }

@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Conduit\Web.csproj", "{9A42CBD2-2EC9-49B9-A47B-1616A496B42A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conduit.Web", "Conduit\Conduit.Web.csproj", "{9A42CBD2-2EC9-49B9-A47B-1616A496B42A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D853CC03-45FE-479D-944A-12BAB9729FE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationCore", "ApplicationCore\ApplicationCore.csproj", "{1B1F17A5-8E08-4579-AB67-A76CE8A195EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conduit.ApplicationCore", "ApplicationCore\Conduit.ApplicationCore.csproj", "{1B1F17A5-8E08-4579-AB67-A76CE8A195EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{3A776848-AA2D-46BB-A0B6-141C55BBC4D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conduit.Infrastructure", "Infrastructure\Conduit.Infrastructure.csproj", "{3A776848-AA2D-46BB-A0B6-141C55BBC4D7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{69B5AE3C-B515-4A99-834D-0B299C189035}"
 EndProject

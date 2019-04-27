@@ -1,11 +1,11 @@
-﻿using ApplicationCore.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Conduit.ApplicationCore.Entities;
 
-namespace ApplicationCore.Interfaces.Repositories
+namespace Conduit.ApplicationCore.Interfaces.Repositories
 {
-    public interface IRepositoryRead<T> where T : EntityBE<T>
+    public interface IRepositoryRead<T> where T : EntityBe<T>
     {
         Task<T> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();

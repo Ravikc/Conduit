@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ApplicationCore.Entities
+﻿namespace Conduit.ApplicationCore.Entities
 {
-    public class EntityBE<T>
+    public class EntityBe<T>
     {
         public T Id { get; set; }
     }

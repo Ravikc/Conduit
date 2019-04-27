@@ -1,12 +1,9 @@
-﻿using ApplicationCore.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Conduit.ApplicationCore.Entities;
 
-namespace ApplicationCore.Interfaces.Repositories
+namespace Conduit.ApplicationCore.Interfaces.Repositories
 {
-    public interface IRepositoryWrite<T> where T : EntityBE<T>
+    public interface IRepositoryWrite<T> where T : EntityBe<T>
     {
         Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);
