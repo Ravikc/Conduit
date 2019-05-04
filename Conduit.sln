@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conduit.Infrastructure", "I
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{69B5AE3C-B515-4A99-834D-0B299C189035}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conduit.Common", "Conduit.Common\Conduit.Common.csproj", "{A4DDA061-B295-411A-BE77-183874743E95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{3A776848-AA2D-46BB-A0B6-141C55BBC4D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A776848-AA2D-46BB-A0B6-141C55BBC4D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A776848-AA2D-46BB-A0B6-141C55BBC4D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4DDA061-B295-411A-BE77-183874743E95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4DDA061-B295-411A-BE77-183874743E95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4DDA061-B295-411A-BE77-183874743E95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4DDA061-B295-411A-BE77-183874743E95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{9A42CBD2-2EC9-49B9-A47B-1616A496B42A} = {D853CC03-45FE-479D-944A-12BAB9729FE4}
 		{1B1F17A5-8E08-4579-AB67-A76CE8A195EF} = {D853CC03-45FE-479D-944A-12BAB9729FE4}
 		{3A776848-AA2D-46BB-A0B6-141C55BBC4D7} = {D853CC03-45FE-479D-944A-12BAB9729FE4}
+		{A4DDA061-B295-411A-BE77-183874743E95} = {D853CC03-45FE-479D-944A-12BAB9729FE4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F53B2F3-E004-4E0B-B015-C065B7436AAF}

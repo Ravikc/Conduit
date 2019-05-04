@@ -3,7 +3,7 @@ using Conduit.ApplicationCore.Entities;
 
 namespace Conduit.ApplicationCore.Interfaces.Repositories
 {
-    public interface IRepositoryWrite<T> where T : EntityBe<T>
+    public interface IRepositoryWrite<T> where T : BaseEntity<T>
     {
         Task<T> AddAsync(T entity);
         Task UpdateAsync(T entity);

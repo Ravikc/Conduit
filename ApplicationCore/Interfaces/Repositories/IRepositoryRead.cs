@@ -5,7 +5,7 @@ using Conduit.ApplicationCore.Entities;
 
 namespace Conduit.ApplicationCore.Interfaces.Repositories
 {
-    public interface IRepositoryRead<T> where T : EntityBe<T>
+    public interface IRepositoryRead<T> where T : BaseEntity<T>
     {
         Task<T> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();

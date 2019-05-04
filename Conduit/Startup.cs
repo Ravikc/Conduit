@@ -1,6 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Reflection;
+using AutoMapper;
+using Conduit.ApplicationCore.Entities;
+using Conduit.Infrastructure.Data;
+using Conduit.Infrastructure.Mappings;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,8 +25,17 @@ namespace Conduit.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ConduitDbContext>();
+
+            services.AddAuthentication().AddJwtBearer();
+
+            services.AddAutoMapper(Assembly.GetAssembly(typeof(BaseMapper)));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            //services.AddDbContext<ApplicationDbContext>(options => options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("ConduitConnection")));
+
+            services.AddDbContext<ConduitDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("ConduitApplicationConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,7 +52,10 @@ namespace Conduit.Web
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
+
+            app.UseAuthentication();
+
+            app.UseMvcWithDefaultRoute();
         }
     }
 }
