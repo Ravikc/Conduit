@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 using AutoMapper;
 using Conduit.ApplicationCore.Entities;
+using Conduit.ApplicationCore.Interfaces.Account;
+using Conduit.ApplicationCore.Services;
 using Conduit.Infrastructure.Data;
 using Conduit.Infrastructure.Mappings;
 using Microsoft.AspNetCore.Builder;
@@ -36,6 +38,8 @@ namespace Conduit.Web
 
             services.AddDbContext<ConduitDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ConduitApplicationConnection")));
+
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
