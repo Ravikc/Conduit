@@ -2,13 +2,13 @@
 
 namespace Conduit.ApplicationCore.DTOs
 {
-    public class UserRegistrationDtoRoot
+    public class UserRegistrationRequestDtoRoot
     {
         [Required]
-        public UserRegistrationDto User { get; set; }
+        public UserRegistrationRequestDto User { get; set; }
     }
 
-    public class UserRegistrationDto
+    public class UserRegistrationRequestDto
     {
         [Required]
         public string UserName { get; set; }

@@ -7,7 +7,13 @@ namespace Conduit.ApplicationCore.Entities
     public class Article : AuditableEntity<int>
     {
         [MaxLength(512)]
-        public string Slug => Title.Slugify();
+        private string _slug;
+
+        public string Slug
+        {
+            get => _slug;
+            set => _slug = Title.Slugify();
+        }
 
         [Required, MaxLength(256)]
         public string Title { get; set; }

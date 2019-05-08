@@ -6,7 +6,7 @@ namespace Conduit.Web.Controllers
 {
     [ApiController]
     [Route("/api/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize]
     public class BaseApiController : ControllerBase
     {
        

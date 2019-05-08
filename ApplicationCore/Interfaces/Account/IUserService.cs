@@ -9,7 +9,7 @@ namespace Conduit.ApplicationCore.Interfaces.Account
 {
     public interface IUserService
     {
-        Task<IdentityResult> RegisterAsync(UserRegistrationDto userRegistrationDto);
-        
+        Task<IdentityResult> RegisterAsync(UserRegistrationRequestDto userRegistrationDto);
+        Task<string> LoginAsync(UserLoginRequestDto userLoginDto);
     }
 }
