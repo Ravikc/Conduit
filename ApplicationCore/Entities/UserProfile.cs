@@ -14,6 +14,6 @@ namespace Conduit.ApplicationCore.Entities
 
         [Key, ForeignKey(nameof(ApplicationUser))]
         public override string Id { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
+        public ConduitUser ApplicationUser { get; set; }
     }
 }

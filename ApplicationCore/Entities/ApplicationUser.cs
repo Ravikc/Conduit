@@ -2,7 +2,7 @@
 
 namespace Conduit.ApplicationCore.Entities
 {
-    public class ApplicationUser : IdentityUser
+    public class ConduitUser : IdentityUser
     {
     }
 }

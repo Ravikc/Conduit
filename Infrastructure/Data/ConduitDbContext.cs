@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Conduit.Infrastructure.Data
 {
-    public class ConduitDbContext : IdentityDbContext<ApplicationUser>
+    public class ConduitDbContext : IdentityDbContext<ConduitUser>
     {
         public ConduitDbContext(DbContextOptions<ConduitDbContext> options) : base(options)
         {

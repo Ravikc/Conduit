@@ -18,14 +18,14 @@ namespace Conduit.ApplicationCore.Services
 {
     public class UserService : IUserService
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ConduitUser> _userManager;
+        private readonly SignInManager<ConduitUser> _signInManager;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
         public UserService(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<ConduitUser> userManager,
+            SignInManager<ConduitUser> signInManager,
             IConfiguration configuration,
             IMapper mapper
         )
@@ -38,19 +38,19 @@ namespace Conduit.ApplicationCore.Services
 
         public async Task<IdentityResult> RegisterAsync(UserRegistrationRequestDto userRegistrationDto)
         {
-            var user = _mapper.Map<ApplicationUser>(userRegistrationDto);
+            var user = _mapper.Map<ConduitUser>(userRegistrationDto);
             return await _userManager.CreateAsync(user, userRegistrationDto.Password);
         }
 
         public async Task<string> LoginAsync(UserLoginRequestDto userLoginDto)
         {
-            //if (!await AuthenticateAsync(userLoginDto))
-            //{
-            //    return null;
-            //}
-
-            string token = GetToken(userLoginDto);
-            return token;
+            var user = await _userManager.FindByEmailAsync(userLoginDto.Email);
+            var signInResult = await _signInManager.CheckPasswordSignInAsync(user, userLoginDto.Password, false);
+            if (signInResult.Succeeded)
+            {
+                return GetToken(userLoginDto);
+            }
+            throw new Exception();
         }
 
         private string GetToken(UserLoginRequestDto userLoginDto)
@@ -71,13 +71,6 @@ namespace Conduit.ApplicationCore.Services
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        private async Task<bool> AuthenticateAsync(UserLoginRequestDto userLoginDto)
-        {
-            var user = _mapper.Map<ApplicationUser>(userLoginDto);
-            return (await _signInManager.CheckPasswordSignInAsync(user, userLoginDto.Password, false)).Succeeded;
-            //return await _userManager.CheckPasswordAsync(user, userLoginDto.Password);
         }
     }
 }

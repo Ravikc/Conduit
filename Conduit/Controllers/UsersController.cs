@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Conduit.Web.Controllers
 {
+    [AllowAnonymous]
     public class UsersController : BaseApiController
     {
         private readonly IUserService _userService;
@@ -20,7 +21,6 @@ namespace Conduit.Web.Controllers
             _mapper = mapper;
         }
 
-        [AllowAnonymous]
         [HttpPost("")]
         public async Task<IActionResult> RegisterUser(UserRegistrationRequestDtoRoot userRegistrationDtoRoot)
         {
@@ -34,7 +34,6 @@ namespace Conduit.Web.Controllers
             return BadRequest(identityResult.Errors);
         }
 
-        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> Login(UserLoginRequestDtoRoot userLoginDtoRoot)
         {
@@ -45,6 +44,7 @@ namespace Conduit.Web.Controllers
         [HttpGet("test")]
         public string Test()
         {
+            _ = _userService.LoginAsync(null).Result;
             return "test successful.";
         }
     }

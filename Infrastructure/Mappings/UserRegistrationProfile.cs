@@ -10,7 +10,7 @@ namespace Conduit.Infrastructure.Mappings
     {
         public UserRegistrationProfile()
         {
-            CreateMap<UserRegistrationRequestDto, ApplicationUser>()
+            CreateMap<UserRegistrationRequestDto, ConduitUser>()
                 .ReverseMap();
 
             CreateMap<UserRegistrationRequestDto, UserLoginRequestDto>()
