@@ -5,10 +5,10 @@ using Conduit.ApplicationCore.Entities;
 
 namespace Conduit.ApplicationCore.Interfaces.Repositories
 {
-    public interface IRepositoryRead<T> where T : BaseEntity<T>
+    public interface IRepositoryRead<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {
-        Task<T> GetByIdAsync<TKey>(TKey id);
-        Task<IEnumerable<T>> GetAllAsync();
-        Task<IEnumerable<T>> GetAllAsync(Predicate<T> condition);
+        Task<TEntity> GetByIdAsync(TKey id);
+        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<IEnumerable<TEntity>> GetAllAsync(Predicate<TEntity> condition);
     }
 }

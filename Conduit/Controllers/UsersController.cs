@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using Conduit.ApplicationCore.DTOs;
-using Conduit.ApplicationCore.Entities;
 using Conduit.ApplicationCore.Interfaces.Account;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Conduit.Web.Controllers
@@ -23,29 +21,22 @@ namespace Conduit.Web.Controllers
 
         [HttpPost("")]
         public async Task<IActionResult> RegisterUser(UserRegistrationRequestDtoRoot userRegistrationDtoRoot)
-        {
+        {           
             var identityResult = await _userService.RegisterAsync(userRegistrationDtoRoot.User);
             if (identityResult.Succeeded)
             {
-                var userLoginRequestDto = _mapper.Map<UserLoginRequestDto>(userRegistrationDtoRoot.User);
-                return await Login(new UserLoginRequestDtoRoot { User = userLoginRequestDto });
+                var user = await _userService.GetUserAsync(userRegistrationDtoRoot.User.Email, userRegistrationDtoRoot.User.Password);
+                return Ok(new UserDtoRoot { User = user });
             }
 
-            return BadRequest(identityResult.Errors);
+            return BadRequest(ToErrorsList(identityResult.Errors));
         }
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(UserLoginRequestDtoRoot userLoginDtoRoot)
         {
-            string token = await _userService.LoginAsync(userLoginDtoRoot.User);
-            return Ok(token);
-        }
-
-        [HttpGet("test")]
-        public string Test()
-        {
-            _ = _userService.LoginAsync(null).Result;
-            return "test successful.";
+            var user = await _userService.GetUserAsync(userLoginDtoRoot.User.Email, userLoginDtoRoot.User.Password);
+            return Ok(new UserDtoRoot { User = user });
         }
     }
 }

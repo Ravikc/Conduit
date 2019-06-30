@@ -6,17 +6,18 @@ using Conduit.ApplicationCore.Entities;
 
 namespace Conduit.Infrastructure.Mappings
 {
-    public class UserRegistrationProfile : BaseMapper
+    public class UserProfile : BaseMapper
     {
-        public UserRegistrationProfile()
+        public UserProfile()
         {
-            CreateMap<UserRegistrationRequestDto, ApplicationUser>()
+            CreateMap<UserDto, ApplicationUser>()
                 .ReverseMap();
 
-            CreateMap<UserRegistrationRequestDto, UserLoginRequestDto>()
+            CreateMap<UserDto, UserRegistrationRequestDto>()
                 .ReverseMap();
 
-
+            CreateMap<UserDto, UserLoginRequestDto>()
+                .ReverseMap();
         }
     }
 }

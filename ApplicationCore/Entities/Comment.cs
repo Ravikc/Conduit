@@ -8,6 +8,6 @@ namespace Conduit.ApplicationCore.Entities
         public string Body { get; set; }
 
         public int AuthorId { get; set; }
-        public UserProfile Author { get; set; }
+        public ApplicationUser Author { get; set; }
     }
 }

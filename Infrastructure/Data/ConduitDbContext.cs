@@ -4,14 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Conduit.Infrastructure.Data
 {
-    public class ConduitDbContext : IdentityDbContext<ConduitUser>
+    public class ConduitDbContext : IdentityDbContext<ApplicationUser>
     {
         public ConduitDbContext(DbContextOptions<ConduitDbContext> options) : base(options)
         {
         }
 
         public DbSet<Article> Articles { get; set; }
-        public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Comment> Comments { get; set; }
 

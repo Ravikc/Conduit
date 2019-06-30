@@ -27,6 +27,6 @@ namespace Conduit.ApplicationCore.Entities
         public IEnumerable<Tag> Tags { get; set; }
 
         public string AuthorId { get; set; }
-        public UserProfile Author { get; set; }
+        public ApplicationUser Author { get; set; }
     }
 }

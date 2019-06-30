@@ -9,28 +9,28 @@ using System.Threading.Tasks;
 
 namespace Conduit.Infrastructure.Data
 {
-    public class RepositoryRead<T> : IRepositoryRead<T> where T : BaseEntity<T>
+    public class RepositoryRead<TEntity, TKey> : IRepositoryRead<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {
-        protected readonly ConduitDbContext _dbContext;
+        protected readonly ConduitDbContext dbContext;
 
         public RepositoryRead(ConduitDbContext dbContext)
         {
-            _dbContext = dbContext;
+            this.dbContext = dbContext;
         }
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await _dbContext.Set<T>().ToListAsync();
+            return await dbContext.Set<TEntity>().ToListAsync();
         }
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync(Predicate<T> condition)
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(Predicate<TEntity> condition)
         {            
-            return await _dbContext.Set<T>().Where(e => condition(e)).ToListAsync();
+            return await dbContext.Set<TEntity>().Where(e => condition(e)).ToListAsync();
         }
 
-        public virtual async Task<T> GetByIdAsync<TKey>(TKey id)
+        public virtual async Task<TEntity> GetByIdAsync(TKey id)
         {
-            return await _dbContext.Set<T>().FindAsync(id);
+            return await dbContext.Set<TEntity>().FindAsync(id);
         }
     }
 }

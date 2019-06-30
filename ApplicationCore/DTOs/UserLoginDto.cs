@@ -21,23 +21,5 @@ namespace Conduit.ApplicationCore.DTOs
         public string Password { get; set; }
     }
 
-    #endregion
-
-    #region Response
-
-    public class UserLoginResponseDtoRoot
-    {
-        public UserLoginResponseDto User { get; set; }
-    }
-
-    public class UserLoginResponseDto
-    {
-        public string Email { get; set; }
-        public string Token { get; set; }
-        public string Username { get; set; }
-        public string Bio { get; set; }
-        public string Image { get; set; }
-    }
-
-    #endregion
+    #endregion     
 }

@@ -3,10 +3,10 @@ using Conduit.ApplicationCore.Entities;
 
 namespace Conduit.ApplicationCore.Interfaces.Repositories
 {
-    public interface IRepositoryWrite<T> where T : BaseEntity<T>
+    public interface IRepositoryWrite<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {
-        Task<T> AddAsync(T entity);
-        Task UpdateAsync(T entity);
-        Task DeleteAsync(T entity);
+        Task<TEntity> AddAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
     }
 }

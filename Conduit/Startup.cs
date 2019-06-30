@@ -1,7 +1,10 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using AutoMapper;
 using Conduit.ApplicationCore.Entities;
+using Conduit.ApplicationCore.Errors;
 using Conduit.ApplicationCore.Interfaces.Account;
 using Conduit.ApplicationCore.Services;
 using Conduit.Infrastructure.Data;
@@ -11,6 +14,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +24,8 @@ namespace Conduit.Web
 {
     public class Startup
     {
+        private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,7 +36,7 @@ namespace Conduit.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentity<ConduitUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ConduitDbContext>();
 
             services.AddAuthentication(a =>
@@ -56,7 +62,30 @@ namespace Conduit.Web
 
             services.AddAutoMapper(Assembly.GetAssembly(typeof(BaseMapper)));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:8080")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
+            services
+                .AddMvc()
+                .ConfigureApiBehaviorOptions(options =>
+                {                    
+                    options.InvalidModelStateResponseFactory = actionContext =>
+                    {
+                        return new BadRequestObjectResult(ToErrorsList(actionContext.ModelState))
+                        {
+                            StatusCode = 422
+                        };
+                    };
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDbContext<ConduitDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ConduitApplicationConnection")));
@@ -77,11 +106,24 @@ namespace Conduit.Web
                 app.UseHsts();
             }
 
+            app.UseCors(MyAllowSpecificOrigins);
+
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
 
             app.UseMvcWithDefaultRoute();
+        }
+
+        private ErrorsDtoRoot ToErrorsList(ModelStateDictionary modelState)
+        {
+            return new ErrorsDtoRoot
+            {
+                Errors = new Errors
+                {
+                    Body = new List<string>(modelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)))
+                }
+            };
         }
     }
 }
