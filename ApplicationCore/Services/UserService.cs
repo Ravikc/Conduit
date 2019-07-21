@@ -39,7 +39,7 @@ namespace Conduit.ApplicationCore.Services
             var user = _mapper.Map<ApplicationUser>(userRegistrationDto);
             return await _userManager.CreateAsync(user, userRegistrationDto.Password);
         }
-         
+
         public async Task<UserDto> GetUserAsync(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -58,7 +58,7 @@ namespace Conduit.ApplicationCore.Services
             userDto.Token = GetToken(email);
             return userDto;
         }
-              
+
 
         private string GetToken(string email)
         {
@@ -78,6 +78,34 @@ namespace Conduit.ApplicationCore.Services
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }    
+        }
+
+        public async Task<IdentityResult> UpdateUserAsync(UserSettingsUpdateRequestDto userSettingsUpdateRequestDto, string email)
+        {
+            var applicationUser = await _userManager.FindByEmailAsync(email);
+
+            //ToDO: check if the password satisfies all password requirements
+
+            string password = string.IsNullOrWhiteSpace(userSettingsUpdateRequestDto.Password)
+                    ? applicationUser.PasswordHash
+                    : _userManager.PasswordHasher.HashPassword(applicationUser, userSettingsUpdateRequestDto.Password);
+
+            var updatedApplicationUser = new ApplicationUser
+            {
+                UserName = userSettingsUpdateRequestDto.UserName ?? applicationUser.UserName,
+                Bio = userSettingsUpdateRequestDto.Bio ?? applicationUser.Bio,
+                Image = userSettingsUpdateRequestDto.Image ?? applicationUser.Email,
+                PasswordHash = password
+            };
+
+            return await _userManager.UpdateAsync(updatedApplicationUser);
+            
+        }
+
+        public async Task<UserDto> GetUserByEmailAsync(string email)
+        {
+            var applicationUser = await _userManager.FindByEmailAsync(email);
+            return _mapper.Map<UserDto>(applicationUser);
+        }
     }
 }

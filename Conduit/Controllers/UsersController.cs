@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Conduit.ApplicationCore.DTOs.User;
@@ -49,6 +51,24 @@ namespace Conduit.Web.Controllers
             }
 
             return Ok(new UserDtoRoot { User = user });
+        }
+
+        [HttpPut("")]
+        [Authorize]
+        public async Task<IActionResult> UpdateUser([FromBody] UserSettingsUpdateRequestDtoRoot userSettingsUpdateRequestDtoRoot)
+        {
+            string jwtToken = Request.Headers["Authorization"];
+            string email = new JwtSecurityToken(jwtToken).Claims
+                .Single(c => c.Type.Equals(JwtRegisteredClaimNames.Email))
+                .Value;
+
+            var userUpdated = await _userService.UpdateUserAsync(userSettingsUpdateRequestDtoRoot.UserSettingsUpdateRequestDto, email);
+            if (userUpdated.Succeeded)
+            {
+                return Ok(_userService.GetUserByEmailAsync(email));
+            }
+
+            return BadRequest(ToErrorsList(userUpdated.Errors));
         }
     }
 }
