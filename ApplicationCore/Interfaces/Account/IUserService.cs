@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Conduit.ApplicationCore.DTOs;
-using Conduit.ApplicationCore.Entities;
+﻿using System.Threading.Tasks;
+using Conduit.ApplicationCore.DTOs.User;
 using Microsoft.AspNetCore.Identity;
 
 namespace Conduit.ApplicationCore.Interfaces.Account

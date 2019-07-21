@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Conduit.ApplicationCore.DTOs
+namespace Conduit.ApplicationCore.DTOs.User
 {
     public class UserRegistrationRequestDtoRoot
     {

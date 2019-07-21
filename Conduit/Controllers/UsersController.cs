@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
-using Conduit.ApplicationCore.DTOs;
+using Conduit.ApplicationCore.DTOs.User;
+using Conduit.ApplicationCore.Errors;
 using Conduit.ApplicationCore.Interfaces.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +38,16 @@ namespace Conduit.Web.Controllers
         public async Task<IActionResult> Login(UserLoginRequestDtoRoot userLoginDtoRoot)
         {
             var user = await _userService.GetUserAsync(userLoginDtoRoot.User.Email, userLoginDtoRoot.User.Password);
+            if (user == null)
+            {
+                var error = new Errors
+                {
+                    Body = new List<string> { "Invalid credentials" }
+                };
+
+                return BadRequest(new ErrorsDtoRoot { Errors = error });
+            }
+
             return Ok(new UserDtoRoot { User = user });
         }
     }

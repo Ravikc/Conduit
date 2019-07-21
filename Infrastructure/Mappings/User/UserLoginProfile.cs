@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Conduit.ApplicationCore.DTOs;
+﻿using Conduit.ApplicationCore.DTOs.User;
 using Conduit.ApplicationCore.Entities;
 
-namespace Conduit.Infrastructure.Mappings
+namespace Conduit.Infrastructure.Mappings.User
 {
     public class UserLoginProfile : BaseMapper
     {

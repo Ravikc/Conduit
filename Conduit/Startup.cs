@@ -37,7 +37,9 @@ namespace Conduit.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ConduitDbContext>();
+                .AddEntityFrameworkStores<ConduitDbContext>()
+                .Services
+                .Configure<IdentityOptions>(o => o.User.RequireUniqueEmail = true);
 
             services.AddAuthentication(a =>
                 {

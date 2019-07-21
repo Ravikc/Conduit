@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using Conduit.ApplicationCore.DTOs;
 using Conduit.ApplicationCore.Entities;
 using Conduit.ApplicationCore.Interfaces.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
+using Conduit.ApplicationCore.DTOs.User;
 
 namespace Conduit.ApplicationCore.Services
 {
