@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Conduit.Web.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     public class UsersController : BaseApiController
     {
         private readonly IUserService _userService;
@@ -23,7 +23,14 @@ namespace Conduit.Web.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("test")]
+        public IActionResult Test()
+        {
+            return Ok("working");
+        }
+
         [HttpPost("")]
+        [AllowAnonymous]
         public async Task<IActionResult> RegisterUser(UserRegistrationRequestDtoRoot userRegistrationDtoRoot)
         {           
             var identityResult = await _userService.RegisterAsync(userRegistrationDtoRoot.User);
@@ -37,6 +44,7 @@ namespace Conduit.Web.Controllers
         }
 
         [HttpPost("Login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(UserLoginRequestDtoRoot userLoginDtoRoot)
         {
             var user = await _userService.GetUserAsync(userLoginDtoRoot.User.Email, userLoginDtoRoot.User.Password);
@@ -54,21 +62,28 @@ namespace Conduit.Web.Controllers
         }
 
         [HttpPut("")]
-        [Authorize]
         public async Task<IActionResult> UpdateUser([FromBody] UserSettingsUpdateRequestDtoRoot userSettingsUpdateRequestDtoRoot)
         {
-            string jwtToken = Request.Headers["Authorization"];
-            string email = new JwtSecurityToken(jwtToken).Claims
-                .Single(c => c.Type.Equals(JwtRegisteredClaimNames.Email))
-                .Value;
-
-            var userUpdated = await _userService.UpdateUserAsync(userSettingsUpdateRequestDtoRoot.UserSettingsUpdateRequestDto, email);
-            if (userUpdated.Succeeded)
+            try
             {
-                return Ok(_userService.GetUserByEmailAsync(email));
-            }
+                string jwtToken = Request.Headers["Authorization"].ToString().Split(" ").ElementAt(1);
+                string email = new JwtSecurityToken(jwtToken).Claims
+                    .Single(c => c.Type.Equals(JwtRegisteredClaimNames.Email))
+                    .Value;
 
-            return BadRequest(ToErrorsList(userUpdated.Errors));
+                var userUpdated = await _userService.UpdateUserAsync(userSettingsUpdateRequestDtoRoot.UserSettingsUpdateRequestDto, email);
+                if (userUpdated.Succeeded)
+                {
+                    return Ok(_userService.GetUserByEmailAsync(email));
+                }
+
+                return BadRequest(ToErrorsList(userUpdated.Errors));
+            }
+            catch (System.Exception e)
+            {
+
+                throw;
+            }
         }
     }
 }

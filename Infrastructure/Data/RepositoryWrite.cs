@@ -1,10 +1,6 @@
 ﻿using Conduit.ApplicationCore.Entities;
 using Conduit.ApplicationCore.Interfaces.Repositories;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Conduit.Infrastructure.Data

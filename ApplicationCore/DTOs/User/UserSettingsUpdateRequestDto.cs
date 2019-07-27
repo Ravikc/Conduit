@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -11,11 +12,14 @@ namespace Conduit.ApplicationCore.DTOs.User
         {
             UserSettingsUpdateRequestDto = userSettingsUpdateRequestDto;
         }
+
+        [JsonProperty("user")]
         public UserSettingsUpdateRequestDto UserSettingsUpdateRequestDto { get; set; }
     }
 
     public class UserSettingsUpdateRequestDto
     {
+        //[Required, MinLength(5)]
         public string Image { get; set; }
         public string UserName { get; set; }
         public string Bio { get; set; }

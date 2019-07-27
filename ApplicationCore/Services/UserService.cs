@@ -58,7 +58,32 @@ namespace Conduit.ApplicationCore.Services
             userDto.Token = GetToken(email);
             return userDto;
         }
+        
+        public async Task<IdentityResult> UpdateUserAsync(UserSettingsUpdateRequestDto userSettingsUpdateRequestDto, string email)
+        {
+            var applicationUser = await _userManager.FindByEmailAsync(email);
 
+            //ToDO: check if the password satisfies all the requirements.
+
+            string passwordHash = string.IsNullOrWhiteSpace(userSettingsUpdateRequestDto.Password)
+                ? applicationUser.PasswordHash
+                : _userManager.PasswordHasher.HashPassword(applicationUser, userSettingsUpdateRequestDto.Password);
+
+            applicationUser.UserName = userSettingsUpdateRequestDto.UserName ?? applicationUser.UserName;
+            applicationUser.Bio = userSettingsUpdateRequestDto.Bio ?? applicationUser.Bio;
+            applicationUser.Image = userSettingsUpdateRequestDto.Image ?? applicationUser.Image;
+            applicationUser.Email = applicationUser.Email;
+            applicationUser.PasswordHash = passwordHash;
+            applicationUser.SecurityStamp = Guid.NewGuid().ToString();            
+
+            return await _userManager.UpdateAsync(applicationUser);            
+        }
+
+        public async Task<UserDto> GetUserByEmailAsync(string email)
+        {
+            var applicationUser = await _userManager.FindByEmailAsync(email);
+            return _mapper.Map<UserDto>(applicationUser);
+        }
 
         private string GetToken(string email)
         {
@@ -78,34 +103,6 @@ namespace Conduit.ApplicationCore.Services
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        public async Task<IdentityResult> UpdateUserAsync(UserSettingsUpdateRequestDto userSettingsUpdateRequestDto, string email)
-        {
-            var applicationUser = await _userManager.FindByEmailAsync(email);
-
-            //ToDO: check if the password satisfies all password requirements
-
-            string password = string.IsNullOrWhiteSpace(userSettingsUpdateRequestDto.Password)
-                    ? applicationUser.PasswordHash
-                    : _userManager.PasswordHasher.HashPassword(applicationUser, userSettingsUpdateRequestDto.Password);
-
-            var updatedApplicationUser = new ApplicationUser
-            {
-                UserName = userSettingsUpdateRequestDto.UserName ?? applicationUser.UserName,
-                Bio = userSettingsUpdateRequestDto.Bio ?? applicationUser.Bio,
-                Image = userSettingsUpdateRequestDto.Image ?? applicationUser.Email,
-                PasswordHash = password
-            };
-
-            return await _userManager.UpdateAsync(updatedApplicationUser);
-            
-        }
-
-        public async Task<UserDto> GetUserByEmailAsync(string email)
-        {
-            var applicationUser = await _userManager.FindByEmailAsync(email);
-            return _mapper.Map<UserDto>(applicationUser);
         }
     }
 }

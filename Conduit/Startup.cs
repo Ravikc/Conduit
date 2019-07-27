@@ -24,7 +24,7 @@ namespace Conduit.Web
 {
     public class Startup
     {
-        private readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        private readonly string _allowSpecificOrigins = "allowSpecificOrigins";
 
         public Startup(IConfiguration configuration)
         {
@@ -66,7 +66,7 @@ namespace Conduit.Web
 
             services.AddCors(options =>
             {
-                options.AddPolicy(MyAllowSpecificOrigins,
+                options.AddPolicy(_allowSpecificOrigins,
                 builder =>
                 {
                     builder.WithOrigins("http://localhost:8080")
@@ -108,7 +108,7 @@ namespace Conduit.Web
                 app.UseHsts();
             }
 
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors(_allowSpecificOrigins);
 
             app.UseHttpsRedirection();
 

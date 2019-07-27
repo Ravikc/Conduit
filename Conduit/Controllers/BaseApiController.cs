@@ -1,15 +1,13 @@
 ﻿using Conduit.ApplicationCore.Errors;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Conduit.Web.Controllers
 {
-    [Route("/api/[controller]")]
+    [Route("/api/v1/[controller]")]
     [Authorize]
     [ApiController]
     public class BaseApiController : ControllerBase
