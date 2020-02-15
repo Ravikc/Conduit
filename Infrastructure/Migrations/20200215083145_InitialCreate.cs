@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Conduit.Infrastructure.Migrations
 {
-    public partial class ChangingDbSchema : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +39,9 @@ namespace Conduit.Infrastructure.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Bio = table.Column<string>(maxLength: 1024, nullable: true),
+                    Image = table.Column<string>(maxLength: 1024, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -52,7 +53,7 @@ namespace Conduit.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -69,11 +70,36 @@ namespace Conduit.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Articles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedAt = table.Column<DateTimeOffset>(nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(nullable: false),
+                    Slug = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(maxLength: 256, nullable: false),
+                    Description = table.Column<string>(maxLength: 512, nullable: false),
+                    Body = table.Column<string>(nullable: false),
+                    AuthorId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Articles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Articles_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -154,55 +180,11 @@ namespace Conduit.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserProfiles",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Bio = table.Column<string>(maxLength: 1024, nullable: true),
-                    Image = table.Column<string>(maxLength: 1024, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserProfiles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserProfiles_AspNetUsers_Id",
-                        column: x => x.Id,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Articles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    Slug = table.Column<string>(maxLength: 512, nullable: true),
-                    Title = table.Column<string>(maxLength: 256, nullable: false),
-                    Description = table.Column<string>(maxLength: 512, nullable: false),
-                    Body = table.Column<string>(nullable: false),
-                    AuthorId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Articles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Articles_UserProfiles_AuthorId",
-                        column: x => x.AuthorId,
-                        principalTable: "UserProfiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: false),
                     Body = table.Column<string>(maxLength: 1024, nullable: false),
@@ -213,9 +195,9 @@ namespace Conduit.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comments_UserProfiles_AuthorId1",
+                        name: "FK_Comments_AspNetUsers_AuthorId1",
                         column: x => x.AuthorId1,
-                        principalTable: "UserProfiles",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -225,7 +207,7 @@ namespace Conduit.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 256, nullable: false),
                     ArticleId = table.Column<int>(nullable: true)
                 },
@@ -330,9 +312,6 @@ namespace Conduit.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Articles");
-
-            migrationBuilder.DropTable(
-                name: "UserProfiles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

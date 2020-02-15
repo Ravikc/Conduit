@@ -70,7 +70,7 @@ namespace Conduit.ApplicationCore.Services
 
             applicationUser.UserName = userSettingsUpdateRequestDto.UserName ?? applicationUser.UserName;
             applicationUser.Bio = userSettingsUpdateRequestDto.Bio ?? applicationUser.Bio;
-            applicationUser.Image = userSettingsUpdateRequestDto.Image ?? applicationUser.Image;
+            applicationUser.Image = userSettingsUpdateRequestDto.ImageUrl ?? applicationUser.Image;
             applicationUser.Email = applicationUser.Email;
             applicationUser.PasswordHash = passwordHash;
             applicationUser.SecurityStamp = Guid.NewGuid().ToString();            
