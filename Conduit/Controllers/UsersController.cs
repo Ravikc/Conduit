@@ -8,6 +8,7 @@ using Conduit.ApplicationCore.Errors;
 using Conduit.ApplicationCore.Interfaces.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Conduit.Web.Controllers
 {
@@ -16,18 +17,15 @@ namespace Conduit.Web.Controllers
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private readonly AppConfiguration _appConfiguration;
 
-        public UsersController(IUserService userService, IMapper mapper)
+
+        public UsersController(IUserService userService, IMapper mapper, IOptionsSnapshot<AppConfiguration> options)
         {
             _userService = userService;
             _mapper = mapper;
-        }
-
-        [HttpGet("test")]
-        public IActionResult Test()
-        {
-            return Ok("working");
-        }
+            _appConfiguration = options.Value;
+        }       
 
         [HttpPost("")]
         [AllowAnonymous]

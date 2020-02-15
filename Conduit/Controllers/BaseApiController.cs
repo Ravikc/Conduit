@@ -11,7 +11,7 @@ namespace Conduit.Web.Controllers
     [Authorize]
     [ApiController]
     public class BaseApiController : ControllerBase
-    {
+    {      
         protected ErrorsDtoRoot ToErrorsList(IEnumerable<IdentityError> identityErrors)
         {
             return new ErrorsDtoRoot

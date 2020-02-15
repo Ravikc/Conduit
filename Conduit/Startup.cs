@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Conduit.Web
@@ -91,6 +92,8 @@ namespace Conduit.Web
 
             services.AddDbContext<ConduitDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ConduitApplicationConnection")));
+
+            services.Configure<AppConfiguration>(Configuration);
 
             services.AddScoped<IUserService, UserService>();
         }

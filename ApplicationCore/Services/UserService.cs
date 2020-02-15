@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,10 +6,10 @@ using AutoMapper;
 using Conduit.ApplicationCore.Entities;
 using Conduit.ApplicationCore.Interfaces.Account;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
-using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames;
 using Conduit.ApplicationCore.DTOs.User;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Conduit.ApplicationCore.Services
 {
@@ -98,7 +97,7 @@ namespace Conduit.ApplicationCore.Services
                 _configuration["Token:Issuer"],
                 _configuration["Token:Audience"],
                 claims,
-                expires: DateTime.UtcNow.AddMinutes(20),
+                expires: DateTime.UtcNow.AddMonths(1),
                 signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
             );
 
