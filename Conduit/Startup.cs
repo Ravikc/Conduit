@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Conduit.Web
@@ -79,7 +79,7 @@ namespace Conduit.Web
             services
                 .AddMvc()
                 .ConfigureApiBehaviorOptions(options =>
-                {                    
+                {
                     options.InvalidModelStateResponseFactory = actionContext =>
                     {
                         return new BadRequestObjectResult(ToErrorsList(actionContext.ModelState))
@@ -87,8 +87,7 @@ namespace Conduit.Web
                             StatusCode = 422
                         };
                     };
-                })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                });
 
             services.AddDbContext<ConduitDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("ConduitApplicationConnection")));
@@ -99,7 +98,7 @@ namespace Conduit.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -117,7 +116,11 @@ namespace Conduit.Web
 
             app.UseAuthentication();
 
-            app.UseMvcWithDefaultRoute();
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints => endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}"));
         }
 
         private ErrorsDtoRoot ToErrorsList(ModelStateDictionary modelState)
