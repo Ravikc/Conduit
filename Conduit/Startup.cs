@@ -6,9 +6,12 @@ using AutoMapper;
 using Conduit.ApplicationCore.Entities;
 using Conduit.ApplicationCore.Errors;
 using Conduit.ApplicationCore.Interfaces.Account;
+using Conduit.ApplicationCore.Interfaces.Repositories;
+using Conduit.ApplicationCore.Interfaces.Services;
 using Conduit.ApplicationCore.Services;
 using Conduit.Infrastructure.Data;
 using Conduit.Infrastructure.Mappings;
+using Conduit.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,10 +46,10 @@ namespace Conduit.Web
                 .Configure<IdentityOptions>(o => o.User.RequireUniqueEmail = true);
 
             services.AddAuthentication(a =>
-                {
-                    a.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    a.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
+            {
+                a.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                a.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
                 .AddJwtBearer(x =>
                 {
                     x.SaveToken = true;
@@ -94,7 +97,15 @@ namespace Conduit.Web
 
             services.Configure<AppConfiguration>(Configuration);
 
+            RegisterServices(services);
+        }
+
+        private void RegisterServices(IServiceCollection services)
+        {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IArticleRepositoryRead, ArticleRepositoryRead>();
+            services.AddScoped<IArticleRepositoryWrite, ArticleRepositoryWrite>();
+            services.AddScoped<IArticleService, ArticleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

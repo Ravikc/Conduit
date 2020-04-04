@@ -5,10 +5,10 @@ namespace Conduit.ApplicationCore.DTOs.User
     public class UserSettingsUpdateRequestDtoRoot
     {
         [JsonPropertyName("user")]
-        public UserSettingsUpdateRequestDto UserSettingsUpdateRequestDto { get; set; }
+        public UserUpdateRequestDto UserSettingsUpdateRequestDto { get; set; }
     }
 
-    public class UserSettingsUpdateRequestDto
+    public class UserUpdateRequestDto
     {
         [JsonPropertyName("image")]
         public string ImageUrl { get; set; }

@@ -1,9 +1,10 @@
 ﻿using Conduit.ApplicationCore.Entities;
 using Conduit.ApplicationCore.Interfaces.Repositories;
+using Conduit.Infrastructure.Data;
 using System;
 using System.Threading.Tasks;
 
-namespace Conduit.Infrastructure.Data
+namespace Conduit.Infrastructure.Repositories
 {
     public class RepositoryWrite<TEntity, TKey> : IRepositoryWrite<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {

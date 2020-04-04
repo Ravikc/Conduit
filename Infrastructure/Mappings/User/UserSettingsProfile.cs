@@ -7,7 +7,7 @@ namespace Conduit.Infrastructure.Mappings.User
     {
         public UserSettingsProfile()
         {
-            CreateMap<UserSettingsUpdateRequestDto, ApplicationUser>()
+            CreateMap<UserUpdateRequestDto, ApplicationUser>()
                 .ReverseMap();
         }
     }

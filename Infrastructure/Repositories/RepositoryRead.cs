@@ -1,5 +1,6 @@
 ﻿using Conduit.ApplicationCore.Entities;
 using Conduit.ApplicationCore.Interfaces.Repositories;
+using Conduit.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Conduit.Infrastructure.Data
+namespace Conduit.Infrastructure.Repositories
 {
     public class RepositoryRead<TEntity, TKey> : IRepositoryRead<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {
@@ -18,12 +19,12 @@ namespace Conduit.Infrastructure.Data
             this.dbContext = dbContext;
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+        public virtual async Task<IList<TEntity>> GetAllAsync()
         {
             return await dbContext.Set<TEntity>().ToListAsync();
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(Predicate<TEntity> condition)
+        public virtual async Task<IList<TEntity>> GetAllAsync(Predicate<TEntity> condition)
         {            
             return await dbContext.Set<TEntity>().Where(e => condition(e)).ToListAsync();
         }

@@ -8,7 +8,7 @@ namespace Conduit.ApplicationCore.Interfaces.Account
     {
         Task<IdentityResult> RegisterAsync(UserRegistrationRequestDto userRegistrationDto);
         Task<UserDto> GetUserAsync(string email, string password);
-        Task<IdentityResult> UpdateUserAsync(UserSettingsUpdateRequestDto userSettingsUpdateRequestDto, string email);
+        Task<IdentityResult> UpdateUserAsync(UserUpdateRequestDto userSettingsUpdateRequestDto, string email);
         Task<UserDto> GetUserByEmailAsync(string email);
     }
 }

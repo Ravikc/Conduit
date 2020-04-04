@@ -58,7 +58,7 @@ namespace Conduit.ApplicationCore.Services
             return userDto;
         }
         
-        public async Task<IdentityResult> UpdateUserAsync(UserSettingsUpdateRequestDto userSettingsUpdateRequestDto, string email)
+        public async Task<IdentityResult> UpdateUserAsync(UserUpdateRequestDto userSettingsUpdateRequestDto, string email)
         {
             var applicationUser = await _userManager.FindByEmailAsync(email);
 

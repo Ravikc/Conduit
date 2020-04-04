@@ -8,7 +8,7 @@ namespace Conduit.ApplicationCore.Interfaces.Repositories
     public interface IRepositoryRead<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {
         Task<TEntity> GetByIdAsync(TKey id);
-        Task<IEnumerable<TEntity>> GetAllAsync();
-        Task<IEnumerable<TEntity>> GetAllAsync(Predicate<TEntity> condition);
+        Task<IList<TEntity>> GetAllAsync();
+        Task<IList<TEntity>> GetAllAsync(Predicate<TEntity> condition);
     }
 }

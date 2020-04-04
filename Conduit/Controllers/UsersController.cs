@@ -16,21 +16,16 @@ namespace Conduit.Web.Controllers
     public class UsersController : BaseApiController
     {
         private readonly IUserService _userService;
-        private readonly IMapper _mapper;
-        private readonly AppConfiguration _appConfiguration;
 
-
-        public UsersController(IUserService userService, IMapper mapper, IOptionsSnapshot<AppConfiguration> options)
+        public UsersController(IUserService userService)
         {
             _userService = userService;
-            _mapper = mapper;
-            _appConfiguration = options.Value;
-        }       
+        }
 
         [HttpPost("")]
         [AllowAnonymous]
         public async Task<IActionResult> RegisterUser(UserRegistrationRequestDtoRoot userRegistrationDtoRoot)
-        {           
+        {
             var identityResult = await _userService.RegisterAsync(userRegistrationDtoRoot.User);
             if (identityResult.Succeeded)
             {
@@ -62,26 +57,20 @@ namespace Conduit.Web.Controllers
         [HttpPut("")]
         public async Task<IActionResult> UpdateUser([FromBody] UserSettingsUpdateRequestDtoRoot userSettingsUpdateRequestDtoRoot)
         {
-            try
+            string jwtToken = Request.Headers["Authorization"].ToString().Split(" ").ElementAt(1);
+            string email = new JwtSecurityToken(jwtToken).Claims
+                .Single(c => c.Type.Equals(JwtRegisteredClaimNames.Email))
+                .Value;
+
+            var userUpdated = await _userService.UpdateUserAsync(userSettingsUpdateRequestDtoRoot.UserSettingsUpdateRequestDto, email);
+            if (userUpdated.Succeeded)
             {
-                string jwtToken = Request.Headers["Authorization"].ToString().Split(" ").ElementAt(1);
-                string email = new JwtSecurityToken(jwtToken).Claims
-                    .Single(c => c.Type.Equals(JwtRegisteredClaimNames.Email))
-                    .Value;
-
-                var userUpdated = await _userService.UpdateUserAsync(userSettingsUpdateRequestDtoRoot.UserSettingsUpdateRequestDto, email);
-                if (userUpdated.Succeeded)
-                {
-                    return Ok(_userService.GetUserByEmailAsync(email));
-                }
-
-                return BadRequest(ToErrorsList(userUpdated.Errors));
+                var user = await _userService.GetUserByEmailAsync(email);
+                user.Token = jwtToken;
+                return Ok(new UserDtoRoot { User = user });
             }
-            catch (System.Exception e)
-            {
 
-                throw;
-            }
+            return BadRequest(ToErrorsList(userUpdated.Errors));
         }
     }
 }
