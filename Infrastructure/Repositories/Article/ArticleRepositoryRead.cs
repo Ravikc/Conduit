@@ -16,12 +16,12 @@ namespace Conduit.Infrastructure.Repositories
 
         }
 
-        public Task<List<Article>> GetByAuthorIdAsync(string authorId)
+        public Task<List<Article>> GetArticlesForAuthorAsync(string authorEmail)
         {
             return dbContext
                 .Articles
                 .AsNoTracking()
-                .Where(a => a.AuthorId.Equals(authorId))
+                .Where(a => a.Author.Email.Equals(authorEmail))
                 .ToListAsync();
         }
     }

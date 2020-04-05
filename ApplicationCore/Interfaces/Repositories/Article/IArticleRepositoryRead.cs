@@ -6,6 +6,6 @@ namespace Conduit.ApplicationCore.Interfaces.Repositories
 {
     public interface IArticleRepositoryRead : IRepositoryRead<Article, int>
     {
-        Task<List<Article>> GetByAuthorIdAsync(string authorId);
+        Task<List<Article>> GetArticlesForAuthorAsync(string authorEmail);
     }
 }

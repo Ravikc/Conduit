@@ -2,10 +2,8 @@
 using AutoMapper;
 using Conduit.ApplicationCore.Entities;
 using Conduit.ApplicationCore.Interfaces.Account;
-using Microsoft.Extensions.Configuration;
 using Conduit.ApplicationCore.Interfaces.Services;
 using Conduit.ApplicationCore.Interfaces.Repositories;
-using Conduit.ApplicationCore.DTOs.User;
 using Conduit.ApplicationCore.DTOs.Article;
 using System.Collections.Generic;
 
@@ -44,10 +42,16 @@ namespace Conduit.ApplicationCore.Services
             return _mapper.Map<ArticleResponseDto>(article);
         }
 
-        public async Task<IEnumerable<ArticleResponseDto>> GetAllArticles()
+        public async Task<IEnumerable<ArticleResponseDto>> GetAllArticlesAsync()
         {
             var articles = await _readRepository.GetAllAsync().ConfigureAwait(false);
             return _mapper.Map<IEnumerable<ArticleResponseDto>>(articles);
+        }
+
+        public async Task<IEnumerable<ArticleResponseDto>> GetArticlesForAuthorAsync(string authorEmail)
+        {
+            var articlesForAuthor = await _readRepository.GetArticlesForAuthorAsync(authorEmail).ConfigureAwait(false);
+            return _mapper.Map<List<Article>, List<ArticleResponseDto>>(articlesForAuthor);
         }
     }
 }

@@ -1,16 +1,11 @@
-﻿using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Conduit.ApplicationCore.DTOs.Article;
-using Conduit.ApplicationCore.DTOs.User;
-using Conduit.ApplicationCore.Errors;
-using Conduit.ApplicationCore.Interfaces.Account;
 using Conduit.ApplicationCore.Interfaces.Services;
+using Conduit.Web.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace Conduit.Web.Controllers
 {
@@ -37,11 +32,19 @@ namespace Conduit.Web.Controllers
         }
 
         [HttpGet("")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetArticles()
         {
-            var articles = await _articleService.GetAllArticles();
-            return Ok(new { Articles = articles });
+            var articles = await _articleService.GetAllArticlesAsync();
+            return Ok(new { articles });
         }
 
+        [HttpGet("Feed")]
+        public async Task<IActionResult> Feed()
+        {
+            string authorEmail = Request.GetEmail();
+            var articles = await _articleService.GetArticlesForAuthorAsync(authorEmail);
+            return Ok(new { articles });
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Conduit.Infrastructure.Repositories
         {
             dbContext.Articles.Add(article);
             var numRowsAffected = await dbContext.SaveChangesAsync();
-            return numRowsAffected == 1 ? article : null;
+            return numRowsAffected > 0 ? article : null;
         }
     }
 }

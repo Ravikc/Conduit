@@ -14,8 +14,8 @@ namespace Conduit.Infrastructure.Mappings
             CreateMap<Article, ArticleResponseDto>()
                 .ReverseMap();
 
-            CreateMap<IList<Article>, IList<ArticleResponseDto>>()
-                .ReverseMap();
+            //CreateMap<IList<Article>, IList<ArticleResponseDto>>()
+            //    .ReverseMap();
         }
     }
 }
