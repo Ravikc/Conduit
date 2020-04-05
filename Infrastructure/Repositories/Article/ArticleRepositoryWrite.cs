@@ -15,7 +15,7 @@ namespace Conduit.Infrastructure.Repositories
         public async Task<Article> CreateArticleAsync(Article article)
         {
             dbContext.Articles.Add(article);
-            var numRowsAffected = await dbContext.SaveChangesAsync();
+            var numRowsAffected = await dbContext.SaveChangesAsync();            
             return numRowsAffected > 0 ? article : null;
         }
     }

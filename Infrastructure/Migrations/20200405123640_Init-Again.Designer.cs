@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Conduit.Infrastructure.Migrations
 {
     [DbContext(typeof(ConduitDbContext))]
-    [Migration("20200215083145_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200405123640_Init-Again")]
+    partial class InitAgain
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

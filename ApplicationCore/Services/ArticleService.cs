@@ -37,8 +37,12 @@ namespace Conduit.ApplicationCore.Services
             {
                 return null;
             }
-
+            
             article = await _readRepository.GetByIdAsync(article.Id).ConfigureAwait(false);
+
+            article.UpdateSlugWithId();
+            await _writeRepository.UpdateAsync(article).ConfigureAwait(false);
+
             return _mapper.Map<ArticleResponseDto>(article);
         }
 

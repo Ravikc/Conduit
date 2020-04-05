@@ -14,21 +14,22 @@ namespace Conduit.Infrastructure.Repositories
             this.dbContext = dbContext;
         }
 
-        public async Task<TEntity> AddAsync(TEntity entity)
+        public virtual async Task<TEntity> AddAsync(TEntity entity)
         {
             var added = await dbContext.Set<TEntity>().AddAsync(entity);
             await dbContext.SaveChangesAsync();
             return added.Entity;
         }
 
-        public Task DeleteAsync(TEntity entity)
+        public virtual Task DeleteAsync(TEntity entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(TEntity entity)
+        public virtual async Task UpdateAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            dbContext.Set<TEntity>().Update(entity);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

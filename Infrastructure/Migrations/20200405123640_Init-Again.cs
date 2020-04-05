@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Conduit.Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitAgain : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
