@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using AutoMapper;
+﻿using AutoMapper;
+using Conduit.ApplicationCore.DTOs;
 using Conduit.ApplicationCore.Entities;
-using Conduit.ApplicationCore.Errors;
 using Conduit.ApplicationCore.Interfaces.Account;
 using Conduit.ApplicationCore.Interfaces.Repositories;
 using Conduit.ApplicationCore.Interfaces.Services;
@@ -23,6 +19,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 
 namespace Conduit.Web
 {

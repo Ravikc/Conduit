@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Conduit.ApplicationCore.DTOs.Tag
+﻿namespace Conduit.ApplicationCore.DTOs.Tags
 {
     public class TagDto
     {

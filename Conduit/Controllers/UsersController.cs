@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using Conduit.ApplicationCore.DTOs;
 using Conduit.ApplicationCore.DTOs.User;
-using Conduit.ApplicationCore.Errors;
 using Conduit.ApplicationCore.Interfaces.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Conduit.Web.Controllers
 {

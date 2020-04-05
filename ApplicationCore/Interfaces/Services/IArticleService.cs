@@ -1,4 +1,4 @@
-﻿using Conduit.ApplicationCore.DTOs.Article;
+﻿using Conduit.ApplicationCore.DTOs.Articles;
 using Conduit.ApplicationCore.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;

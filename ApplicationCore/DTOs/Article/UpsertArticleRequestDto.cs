@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Conduit.ApplicationCore.DTOs.Article
-{   
+﻿namespace Conduit.ApplicationCore.DTOs.Articles
+{
     public class UpsertArticleRequestDto
     {
         public string Title { get; set; }

@@ -1,9 +1,9 @@
-﻿using Conduit.ApplicationCore.DTOs.Tag;
+﻿using Conduit.ApplicationCore.DTOs.Tags;
 using Conduit.ApplicationCore.DTOs.User;
 using System;
 using System.Collections.Generic;
 
-namespace Conduit.ApplicationCore.DTOs.Article
+namespace Conduit.ApplicationCore.DTOs.Articles
 {
     public class ArticleDtoRoot<T>
     {

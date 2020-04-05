@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Conduit.ApplicationCore.Entities;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Conduit.ApplicationCore.Entities;
 
 namespace Conduit.ApplicationCore.Interfaces.Repositories
 {

@@ -1,6 +1,5 @@
-﻿using Conduit.ApplicationCore.DTOs.Article;
+﻿using Conduit.ApplicationCore.DTOs.Articles;
 using Conduit.ApplicationCore.Entities;
-using System.Collections.Generic;
 
 namespace Conduit.Infrastructure.Mappings
 {
@@ -13,9 +12,6 @@ namespace Conduit.Infrastructure.Mappings
 
             CreateMap<Article, ArticleResponseDto>()
                 .ReverseMap();
-
-            //CreateMap<IList<Article>, IList<ArticleResponseDto>>()
-            //    .ReverseMap();
         }
     }
 }

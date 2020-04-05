@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using Conduit.ApplicationCore.DTOs.Articles;
 using Conduit.ApplicationCore.Entities;
 using Conduit.ApplicationCore.Interfaces.Account;
-using Conduit.ApplicationCore.Interfaces.Services;
 using Conduit.ApplicationCore.Interfaces.Repositories;
-using Conduit.ApplicationCore.DTOs.Article;
+using Conduit.ApplicationCore.Interfaces.Services;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Conduit.ApplicationCore.Services
 {
@@ -24,7 +24,7 @@ namespace Conduit.ApplicationCore.Services
             _readRepository = readRepository;
             _writeRepository = writeRepository;
         }
-        
+
         public async Task<ArticleResponseDto> CreateArticleAsync(UpsertArticleRequestDto articleDTO, string authorEmail)
         {
             var article = _mapper.Map<Article>(articleDTO);
@@ -32,7 +32,7 @@ namespace Conduit.ApplicationCore.Services
             var author = await _userService.GetUserByEmailAsync(authorEmail).ConfigureAwait(false);
             article.Author = _mapper.Map<ApplicationUser>(author);
 
-            article =  await _writeRepository.CreateArticleAsync(article).ConfigureAwait(false);
+            article = await _writeRepository.CreateArticleAsync(article).ConfigureAwait(false);
             if (article == null)
             {
                 return null;

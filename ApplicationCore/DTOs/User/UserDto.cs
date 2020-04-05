@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Conduit.ApplicationCore.DTOs.User
+﻿namespace Conduit.ApplicationCore.DTOs.User
 {
     public class UserDtoRoot
     {

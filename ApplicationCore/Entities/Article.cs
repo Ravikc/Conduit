@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Conduit.Common.Extensions;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Conduit.Common.Extensions;
 
 namespace Conduit.ApplicationCore.Entities
 {
@@ -21,7 +21,7 @@ namespace Conduit.ApplicationCore.Entities
         [Required, MaxLength(512)]
         public string Description { get; set; }
 
-        [Required] 
+        [Required]
         public string Body { get; set; }
 
         public IEnumerable<Tag> Tags { get; set; }

@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using Conduit.ApplicationCore.Entities;
+﻿using Conduit.ApplicationCore.Entities;
+using System.Threading.Tasks;
 
 namespace Conduit.ApplicationCore.Interfaces.Repositories
 {

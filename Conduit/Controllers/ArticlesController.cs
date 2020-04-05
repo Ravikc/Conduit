@@ -1,11 +1,11 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
-using Conduit.ApplicationCore.DTOs.Article;
+﻿using Conduit.ApplicationCore.DTOs.Articles;
 using Conduit.ApplicationCore.Interfaces.Services;
 using Conduit.Web.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Conduit.Web.Controllers
 {

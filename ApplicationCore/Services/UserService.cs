@@ -1,15 +1,15 @@
-﻿using System;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using Conduit.ApplicationCore.DTOs.User;
 using Conduit.ApplicationCore.Entities;
 using Conduit.ApplicationCore.Interfaces.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Conduit.ApplicationCore.DTOs.User;
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Conduit.ApplicationCore.Services
 {
@@ -36,18 +36,18 @@ namespace Conduit.ApplicationCore.Services
         public async Task<IdentityResult> RegisterAsync(UserRegistrationRequestDto userRegistrationDto)
         {
             var user = _mapper.Map<ApplicationUser>(userRegistrationDto);
-            return await _userManager.CreateAsync(user, userRegistrationDto.Password);
+            return await _userManager.CreateAsync(user, userRegistrationDto?.Password).ConfigureAwait(false);
         }
 
         public async Task<UserDto> GetUserAsync(string email, string password)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(email).ConfigureAwait(false);
             if (user == null)
             {
                 return null;
             }
 
-            var signInResult = await _signInManager.CheckPasswordSignInAsync(user, password, false);
+            var signInResult = await _signInManager.CheckPasswordSignInAsync(user, password, false).ConfigureAwait(false);
             if (!signInResult.Succeeded)
             {
                 return null;
@@ -57,10 +57,15 @@ namespace Conduit.ApplicationCore.Services
             userDto.Token = GetToken(email);
             return userDto;
         }
-        
+
         public async Task<IdentityResult> UpdateUserAsync(UserUpdateRequestDto userSettingsUpdateRequestDto, string email)
         {
-            var applicationUser = await _userManager.FindByEmailAsync(email);
+            if (userSettingsUpdateRequestDto == null)
+            {
+                return null;
+            }
+
+            var applicationUser = await _userManager.FindByEmailAsync(email).ConfigureAwait(false);
 
             //ToDO: check if the password satisfies all the requirements.
 
@@ -73,14 +78,14 @@ namespace Conduit.ApplicationCore.Services
             applicationUser.Image = userSettingsUpdateRequestDto.ImageUrl ?? applicationUser.Image;
             applicationUser.Email = applicationUser.Email;
             applicationUser.PasswordHash = passwordHash;
-            applicationUser.SecurityStamp = Guid.NewGuid().ToString();            
+            applicationUser.SecurityStamp = Guid.NewGuid().ToString();
 
-            return await _userManager.UpdateAsync(applicationUser);            
+            return await _userManager.UpdateAsync(applicationUser).ConfigureAwait(false);
         }
 
         public async Task<UserDto> GetUserByEmailAsync(string email)
         {
-            var applicationUser = await _userManager.FindByEmailAsync(email);
+            var applicationUser = await _userManager.FindByEmailAsync(email).ConfigureAwait(false);
             return _mapper.Map<UserDto>(applicationUser);
         }
 

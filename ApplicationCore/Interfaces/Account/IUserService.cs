@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using Conduit.ApplicationCore.DTOs.User;
+﻿using Conduit.ApplicationCore.DTOs.User;
 using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace Conduit.ApplicationCore.Interfaces.Account
 {

@@ -1,4 +1,4 @@
-﻿using Conduit.ApplicationCore.Errors;
+﻿using Conduit.ApplicationCore.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,7 @@ namespace Conduit.Web.Controllers
     [Authorize]
     [ApiController]
     public class BaseApiController : ControllerBase
-    {      
+    {
         protected ErrorsDtoRoot ToErrorsList(IEnumerable<IdentityError> identityErrors)
         {
             return new ErrorsDtoRoot
@@ -23,6 +23,6 @@ namespace Conduit.Web.Controllers
             };
         }
 
-        
+
     }
 }

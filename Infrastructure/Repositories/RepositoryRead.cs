@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Conduit.Infrastructure.Repositories
@@ -25,7 +24,7 @@ namespace Conduit.Infrastructure.Repositories
         }
 
         public virtual async Task<IList<TEntity>> GetAllAsync(Predicate<TEntity> condition)
-        {            
+        {
             return await dbContext.Set<TEntity>().Where(e => condition(e)).ToListAsync();
         }
 
